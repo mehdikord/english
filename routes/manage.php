@@ -53,6 +53,15 @@ Route::middleware('auth:admin')->group(function (){
 
     });
 
+    //Episodes
+    Route::group(['prefix' => 'episodes','as' => 'episodes.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'store'])->name('store');
+        Route::post('{episode}',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'update'])->name('update');
+        Route::delete('{episode}',[\App\Http\Controllers\Manage\Faqs\FaqsController::class,'delete'])->name('delete');
+
+    });
+
 
 
 

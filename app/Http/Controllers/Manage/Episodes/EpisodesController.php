@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Manage\Faqs;
+namespace App\Http\Controllers\Manage\Episodes;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Faqs\FaqsRequest;
+use App\Http\Requests\Episodes\EpisodesRequest;
 use App\Interfaces\Faqs\FaqsInterface;
 use App\Models\Faq;
 use Illuminate\Http\Request;
 
-class FaqsController extends Controller
+class EpisodesController extends Controller
 {
     private FaqsInterface $repository;
     public function __construct(FaqsInterface $faqs)
@@ -21,11 +21,11 @@ class FaqsController extends Controller
         return $this->repository->index();
     }
 
-    public function store(FaqsRequest $request)
+    public function store(EpisodesRequest $request)
     {
         return $this->repository->store($request);
     }
-    public function update(Faq $faq, FaqsRequest $request)
+    public function update(Faq $faq, EpisodesRequest $request)
     {
         return $this->repository->update($request,$faq);
     }
