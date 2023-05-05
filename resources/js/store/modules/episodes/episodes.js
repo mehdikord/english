@@ -5,45 +5,45 @@ export default {
     state : {},
     mutations: {},
     actions:{
-        UserMembersIndex(){
+        EpisodesIndex(){
             return new Promise((resolve,reject) => {
-                axios.get('users/members').then((result) => {
+                axios.get('episodes').then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
                 })
             } )
         },
-        UserMembersStore(_,item){
+        EpisodesStore(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('users/members',item).then((result) => {
+                axios.post('episodes',item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
                 })
             } )
         },
-        UserMembersEdit(_,item){
+        EpisodesEdit(_,item){
             return new Promise((resolve,reject) => {
-                axios.post('users/members/'+item.id,item).then((result) => {
+                axios.post('episodes/'+item.id,item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
                 })
             } )
         },
-        UserMembersDelete(_,item){
+        EpisodesDelete(_,item){
             return new Promise((resolve,reject) => {
-                axios.delete('users/members/'+item).then((result) => {
+                axios.delete('episodes/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
                 })
             } )
         },
-        UserMembersChangeStatus(_,item){
+        EpisodesChangeStatus(_,item){
             return new Promise((resolve,reject) => {
-                axios.get('users/members/activation/'+item).then((result) => {
+                axios.get('episodes/activation/'+item).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);

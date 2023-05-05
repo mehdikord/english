@@ -10,36 +10,55 @@
                 transition-hide="scale"
                 position="top"
             >
-                <q-card style="max-width: 700px;width: 700px">
+                <q-card style="max-width: 850px;width: 850px">
                     <q-card-section class="bg-deep-orange-9 text-white">
                         <div class="text-h6">Add new item</div>
                     </q-card-section>
                     <q-card-section >
-                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="Name" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+                        <q-input v-model="add.name"  lazy-rules type="text" outlined label="Episode name" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.email"  lazy-rules type="email" outlined label="Email" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
+                        <q-input v-model="add.subtitle"  lazy-rules type="text" outlined label="Subtitle" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'subtitle')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'subtitle')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.phone" lazy-rules type="number" outlined label="Phone" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
+                        <q-input v-model="add.price"  lazy-rules type="text" outlined label="Price($)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'price')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password" lazy-rules type="password" outlined label="Password" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password')">
+                        <q-input v-model="add.sale"  lazy-rules type="text" outlined label="Sale($)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password_confirmation" lazy-rules type="password" outlined label="Password confirmation" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password_confirmation')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password_confirmation')"></Error_Validation>
+                        <q-file outlined bottom-slots v-model="add.image" label="Episode image" counter class="q-my-xs q-mb-md">
+                            <template v-slot:prepend>
+                                <q-icon name="mdi-image" @click.stop.prevent />
                             </template>
-                        </q-input>
+                            <template v-slot:append>
+<!--                                <q-avatar size="lg">-->
+<!--                                    <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg">-->
+<!--                                </q-avatar>-->
+                                <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
+                            </template>
+                            <template v-slot:hint >
+                                The file must be of ( jpg-png ) type
+                            </template>
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
+                            </template>
+                        </q-file>
+
+                        <div class="q-my-xs q-gutter-sm">
+                            <q-editor
+                                v-model="add.description"
+                                :definitions="{}"
+                            />
+                        </div>
 
                     </q-card-section>
 
@@ -50,7 +69,7 @@
                 </q-card>
             </q-dialog>
 
-            <strong class="font-16">System members list</strong>
+            <strong class="font-16">Episodes List</strong>
         </q-card-section>
 
         <q-card-section>
@@ -66,25 +85,7 @@
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
-                <template v-slot:body-cell-phone="props">
-                    <q-td :props="props">
-                        <div v-if="props.row.phone">
-                            <q-chip color="teal-4" class="font-12">{{props.row.phone}}</q-chip>
-                        </div>
-                    </q-td>
-                </template>
-                <template v-slot:body-cell-is_active="props">
-                    <q-td :props="props">
-                        <q-toggle
-                            v-model="props.row.is_active"
-                            :false-value="0"
-                            :true-value="1"
-                            icon="mdi-check"
-                            color="green-7"
-                            @click="ChangeStatus(props.row.id)"
-                        />
-                    </q-td>
-                </template>
+
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -105,21 +106,38 @@
                                 <div class="text-h6">Edit item : {{props.row.name}}</div>
                             </q-card-section>
                             <q-card-section >
-                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="Name" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
+
+                                <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="Episode name" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.email"  lazy-rules type="email" outlined label="Email" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'email')">
+                                <q-input v-model="props.row.subtitle"  lazy-rules type="text" outlined label="Subtitle" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'subtitle')">
                                     <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'email')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'subtitle')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.phone" lazy-rules type="number" outlined label="Phone" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'phone')">
+                                <q-input v-model="props.row.price"  lazy-rules type="text" outlined label="Price($)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'price')">
                                     <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'price')"></Error_Validation>
                                     </template>
                                 </q-input>
+                                <q-input v-model="props.row.sale"  lazy-rules type="text" outlined label="Sale" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
+                                    </template>
+                                </q-input>
+                                <q-file v-model="props.row.sale"  lazy-rules type="text" outlined label="Sale" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
+                                    </template>
+                                </q-file>
+                                <div class="q-my-xs q-gutter-sm">
+                                    <q-editor
+                                        v-model="props.row.description"
+                                        :definitions="{}"
+                                    />
+                                </div>
 
 
                             </q-card-section>
@@ -147,7 +165,7 @@
 import {mapActions} from "vuex";
 
 export default {
-    name: "Manage_Users_Members",
+    name: "Manage_Episodes",
     created() {
         this.GetItems();
 
@@ -162,10 +180,12 @@ export default {
             dialog_edit:[],
             add:{
                 name:null,
-                email:null,
-                phone:null,
-                password:null,
-                password_confirmation:null,
+                subtitle:null,
+                price:null,
+                sale:null,
+                description:null,
+                image:null,
+
             },
             item_columns:[
                 {
@@ -177,35 +197,27 @@ export default {
                     sortable: true
                 },
                 {
-                    name:'name',
+                    name:'title',
                     required: true,
-                    label: 'Name',
+                    label: 'Title',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row.title,
                     sortable: true
                 },
                 {
-                    name:'email',
+                    name:'question',
                     required: true,
-                    label: 'Email',
+                    label: 'Question',
                     align: 'left',
-                    field: row => row.email,
+                    field: row => row.question,
                     sortable: true
                 },
                 {
-                    name:'phone',
+                    name:'answer',
                     required: true,
-                    label: 'Phone',
+                    label: 'Answer',
                     align: 'left',
-                    field: row => row.phone,
-                    sortable: true
-                },
-                {
-                    name:'is_active',
-                    required: true,
-                    label: 'Account Status',
-                    align: 'left',
-                    field: row => row.is_active,
+                    field: row => row.answer,
                     sortable: true
                 },
                 {
@@ -220,16 +232,16 @@ export default {
     },
     methods:{
         ...mapActions([
-            "UserMembersIndex",
-            "UserMembersStore",
-            "UserMembersDelete",
-            "UserMembersEdit",
-            "UserMembersChangeStatus"
+            "EpisodesIndex",
+            "EpisodesStore",
+            "EpisodesDelete",
+            "EpisodesEdit",
+            "EpisodesChangeStatus",
 
         ]),
         GetItems(){
 
-            this.UserMembersIndex().then(res => {
+            this.EpisodesIndex().then(res => {
                 this.items = res.data.result;
                 this.loading_get=false;
             }).catch(error => {
@@ -238,7 +250,7 @@ export default {
         },
         AddItem(){
             this.loading_add=true;
-            this.UserMembersStore(this.add).then(res => {
+            this.EpisodesStore(this.add).then(res => {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
@@ -255,7 +267,7 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
-            this.UserMembersEdit(item).then(res => {
+            this.EpisodesEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{
                     if (item_get.id === item.id){
@@ -289,7 +301,7 @@ export default {
                 },
                 persistent: true
             }).onOk(() => {
-                this.UserMembersDelete(id).then(res => {
+                this.EpisodesDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
                     })
@@ -305,11 +317,14 @@ export default {
             })
         },
         ChangeStatus(id){
-            this.UserMembersChangeStatus(id).then(res => {
+            this.EpisodesChangeStatus(id).then(res => {
                 return this.NotifySuccess('Account status change successful');
             }).catch(error => {
                 return this.NotifyServerError();
             })
+        },
+        ImageFileHandler(){
+            console.log(this.add.image)
         }
 
     }

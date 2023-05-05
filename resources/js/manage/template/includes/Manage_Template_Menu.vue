@@ -28,6 +28,13 @@
 
         </q-expansion-item>
 
+        <q-item clickable v-ripple :to="{name : 'episodes'}">
+            <q-item-section avatar>
+                <q-icon color="indigo" name="mdi-clipboard-list" />
+            </q-item-section>
+            <q-item-section>Episodes</q-item-section>
+        </q-item>
+
         <q-item clickable v-ripple :to="{name : 'faqs'}">
             <q-item-section avatar>
                 <q-icon color="indigo" name="mdi-help" />

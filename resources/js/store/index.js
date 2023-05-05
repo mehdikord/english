@@ -2,6 +2,8 @@ import {createStore} from "vuex";
 import managers from "./modules/users/managers";
 import members from "./modules/users/members";
 import faqs from "./modules/faqs/faqs"
+import episodes from "./modules/episodes/episodes"
+import helpers from "./modules/helpers/helpers"
 const store = createStore({
     state(){
         return {
@@ -13,7 +15,10 @@ const store = createStore({
     modules:{
         managers,
         members,
-        faqs
+        faqs,
+        episodes,
+        helpers
+
 
     },
 

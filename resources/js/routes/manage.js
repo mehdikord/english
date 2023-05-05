@@ -5,6 +5,7 @@ import store from "../store"
 import Manage_Users_Managers from "@/manage/pages/users/Manage_Users_Managers.vue";
 import Manage_Users_Members from "../manage/pages/users/Manage_Users_Members.vue";
 import Manage_Faqs from "@/manage/pages/faqs/Manage_Faqs.vue";
+import Manage_Episodes from "../manage/pages/episodes/Manage_Episodes.vue";
 
 const routes = [
 
@@ -37,6 +38,12 @@ const routes = [
         name : "faqs",
         component : Manage_Faqs,
         meta : { title : "Faqs"}
+    },
+    {
+        path : "/management/episodes",
+        name : "episodes",
+        component : Manage_Episodes,
+        meta : { title : "Episodes"}
     },
 
 ]
