@@ -57,6 +57,7 @@ Route::middleware('auth:admin')->group(function (){
     Route::group(['prefix' => 'episodes','as' => 'episodes.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'index'])->name('index');
         Route::post('',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'store'])->name('store');
+        Route::get('activation/{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'activation'])->name('activation');
         Route::post('{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'update'])->name('update');
         Route::delete('{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'delete'])->name('delete');
 

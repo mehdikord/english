@@ -26,13 +26,18 @@ class EpisodesController extends Controller
 
         return $this->repository->store($request);
     }
-    public function update(Episode $faq, EpisodesRequest $request)
+    public function update(Episode $episode, EpisodesRequest $request)
     {
-        return $this->repository->update($request,$faq);
+        return $this->repository->update($request,$episode);
     }
 
-    public function delete(Episode $faq)
+    public function delete(Episode $episode)
     {
-        return $this->repository->delete($faq);
+        return $this->repository->delete($episode);
+    }
+
+    public function activation(Episode $episode)
+    {
+        return $this->repository->activation($episode);
     }
 }

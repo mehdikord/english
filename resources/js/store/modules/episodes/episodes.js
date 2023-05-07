@@ -23,7 +23,7 @@ export default {
                 if (item.sale){data.append('sale',item.sale)}
                 if (item.description){data.append('description',item.description)}
                 if (item.image){data.append('image',item.image,item.image.name)}
-                axios.post('episodes',item).then((result) => {
+                axios.post('episodes',data,{headers: {'Content-Type': 'multipart/form-data'}}).then((result) => {
                     resolve(result);
                 }).catch(error => {
                     reject(error);
@@ -32,6 +32,14 @@ export default {
         },
         EpisodesEdit(_,item){
             return new Promise((resolve,reject) => {
+
+                var data = new FormData();
+                if (item.name){data.append('name',item.name)}
+                if (item.subtitle){data.append('subtitle',item.subtitle)}
+                if (item.price){data.append('price',item.price)}
+                if (item.sale){data.append('sale',item.sale)}
+                if (item.description){data.append('description',item.description)}
+                if (item.image){data.append('image',item.image,item.image.name)}
                 axios.post('episodes/'+item.id,item).then((result) => {
                     resolve(result);
                 }).catch(error => {

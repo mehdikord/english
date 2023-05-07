@@ -204,7 +204,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add={};
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;

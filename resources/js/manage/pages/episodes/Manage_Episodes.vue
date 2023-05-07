@@ -40,9 +40,7 @@
                                 <q-icon name="mdi-image" @click.stop.prevent />
                             </template>
                             <template v-slot:append>
-<!--                                <q-avatar size="lg">-->
-<!--                                    <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg">-->
-<!--                                </q-avatar>-->
+
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                             <template v-slot:hint >
@@ -86,6 +84,32 @@
                     <Global_Loading></Global_Loading>
                 </template>
 
+                <template v-slot:body-cell-id="props">
+
+                    <q-td :props="props">
+                        <storage>
+                            {{props.row.id}}
+                        </storage>
+                       <q-avatar class="q-ml-md" square size="65px">
+                           <img v-if="props.row.image_url" :src="props.row.image_url">
+                           <img v-else src="/assets/images/default/episode.png">
+                       </q-avatar>
+                    </q-td>
+                </template>
+
+                <template v-slot:body-cell-is_active="props">
+                    <q-td :props="props">
+                        <q-toggle
+                            v-model="props.row.is_active"
+                            :false-value="0"
+                            :true-value="1"
+                            icon="mdi-check"
+                            color="green-7"
+                            @click="ChangeStatus(props.row.id)"
+                        />
+                    </q-td>
+                </template>
+
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
                         <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
@@ -106,7 +130,6 @@
                                 <div class="text-h6">Edit item : {{props.row.name}}</div>
                             </q-card-section>
                             <q-card-section >
-
                                 <q-input v-model="props.row.name"  lazy-rules type="text" outlined label="Episode name" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'name')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'name')"></Error_Validation>
@@ -122,16 +145,33 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'price')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-input v-model="props.row.sale"  lazy-rules type="text" outlined label="Sale" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
+                                <q-input v-model="props.row.sale"  lazy-rules type="text" outlined label="Sale($)" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
                                     <template v-slot:error>
                                         <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-file v-model="props.row.sale"  lazy-rules type="text" outlined label="Sale" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'sale')">
+                                <q-banner  class="bg-warning">
+                                    <q-icon name="mdi-alert" size="sm" ></q-icon>
+                                    Select the new file only if you want change the current photo
+                                </q-banner>
+                                <q-file outlined bottom-slots v-model="add.image" label="Episode image" counter class="q-my-xs q-mb-md">
+
+                                    <template v-slot:prepend>
+                                        <q-icon name="mdi-image" @click.stop.prevent />
+                                    </template>
+                                    <template v-slot:append>
+
+                                        <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
+                                    </template>
+                                    <template v-slot:hint >
+                                        The file must be of ( jpg-png ) type
+                                    </template>
                                     <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
                                     </template>
                                 </q-file>
+
+
                                 <div class="q-my-xs q-gutter-sm">
                                     <q-editor
                                         v-model="props.row.description"
@@ -139,9 +179,7 @@
                                     />
                                 </div>
 
-
                             </q-card-section>
-
                             <q-card-actions align="right">
                                 <q-btn  label="Close" color="red" v-close-popup />
                                 <q-btn @click="EditItem(props.row)" :loading="loading_add" label="Update item" color="indigo"/>
@@ -150,7 +188,6 @@
                     </q-dialog>
 
                 </template>
-
 
             </q-table>
 
@@ -185,7 +222,6 @@ export default {
                 sale:null,
                 description:null,
                 image:null,
-
             },
             item_columns:[
                 {
@@ -197,29 +233,46 @@ export default {
                     sortable: true
                 },
                 {
-                    name:'title',
+                    name:'name',
                     required: true,
-                    label: 'Title',
+                    label: 'Name',
                     align: 'left',
-                    field: row => row.title,
+                    field: row => row.name,
                     sortable: true
                 },
                 {
-                    name:'question',
+                    name:'subtitle',
                     required: true,
-                    label: 'Question',
+                    label: 'Subtitle',
                     align: 'left',
-                    field: row => row.question,
+                    field: row => row.subtitle,
                     sortable: true
                 },
                 {
-                    name:'answer',
+                    name:'price',
                     required: true,
-                    label: 'Answer',
+                    label: 'Price',
                     align: 'left',
-                    field: row => row.answer,
+                    field: row => row.price,
                     sortable: true
                 },
+                {
+                    name:'sale',
+                    required: true,
+                    label: 'Sale',
+                    align: 'left',
+                    field: row => row.sale,
+                    sortable: true
+                },
+                {
+                    name:'is_active',
+                    required: true,
+                    label: 'Status',
+                    align: 'left',
+                    field: row => row.is_active,
+                    sortable: true
+                },
+
                 {
                     name:'tools',
                     required: true,
@@ -259,7 +312,7 @@ export default {
                 this.items.unshift(res.data.result);
                 this.loading_add=false;
                 this.dialog_add=false;
-                this.add=[];
+                this.add={};
                 return this.NotifyCreate();
             }).catch(error => {
                 this.loading_add=false;
@@ -328,9 +381,6 @@ export default {
                 return this.NotifyServerError();
             })
         },
-        ImageFileHandler(){
-            console.log(this.add.image)
-        }
 
     }
 }

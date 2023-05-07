@@ -18,6 +18,7 @@ class UsersRepository implements UsersInterface
 
     public function managers_store($request)
     {
+
         $item = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -57,6 +58,7 @@ class UsersRepository implements UsersInterface
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'is_active'=>1,
             'password' => Hash::make($request->password),
         ]);
         return response_success($item);

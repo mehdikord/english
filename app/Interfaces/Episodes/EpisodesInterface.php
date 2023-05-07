@@ -12,7 +12,7 @@ interface EpisodesInterface
 
     public function delete($item);
 
-
+    public function activation($item);
 
 
 }
