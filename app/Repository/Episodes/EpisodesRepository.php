@@ -15,6 +15,7 @@ class EpisodesRepository implements EpisodesInterface
 
     public function store($request)
     {
+
         $item = Episode::create([
             'name' => $request->name,
             'subtitle' => $request->subtitle,

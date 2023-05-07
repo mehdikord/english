@@ -249,6 +249,11 @@ export default {
             });
         },
         AddItem(){
+            if(this.add.image){
+                if (this.add.image.type !== 'image/png' && this.add.image.type !== 'image/jpeg'){
+                    return this.NotifyError('this file is not valid image')
+                }
+            }
             this.loading_add=true;
             this.EpisodesStore(this.add).then(res => {
                 this.items.unshift(res.data.result);

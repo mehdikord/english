@@ -23,6 +23,7 @@ class EpisodesController extends Controller
 
     public function store(EpisodesRequest $request)
     {
+
         return $this->repository->store($request);
     }
     public function update(Episode $faq, EpisodesRequest $request)
