@@ -150,28 +150,6 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
                                     </template>
                                 </q-input>
-                                <q-banner  class="bg-warning">
-                                    <q-icon name="mdi-alert" size="sm" ></q-icon>
-                                    Select the new file only if you want change the current photo
-                                </q-banner>
-                                <q-file outlined bottom-slots v-model="add.image" label="Episode image" counter class="q-my-xs q-mb-md">
-
-                                    <template v-slot:prepend>
-                                        <q-icon name="mdi-image" @click.stop.prevent />
-                                    </template>
-                                    <template v-slot:append>
-
-                                        <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
-                                    </template>
-                                    <template v-slot:hint >
-                                        The file must be of ( jpg-png ) type
-                                    </template>
-                                    <template v-slot:error>
-                                        <Error_Validation :errors="this.MixinValidation(errors,'image')"></Error_Validation>
-                                    </template>
-                                </q-file>
-
-
                                 <div class="q-my-xs q-gutter-sm">
                                     <q-editor
                                         v-model="props.row.description"
