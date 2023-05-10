@@ -20,7 +20,7 @@
 
             <q-item clickable v-ripple :to="{name : 'users_members'}">
                 <q-item-section avatar>
-                    <q-icon color="indigo" name="mdi-bluetooth" />
+                    <q-icon color="indigo" name="mdi-account-group" />
                 </q-item-section>
                 <q-item-section> Members </q-item-section>
 

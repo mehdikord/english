@@ -2,6 +2,8 @@
 namespace App\Repository\Auth;
 
 use App\Interfaces\Auth\AuthInterface;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthRepository implements AuthInterface
 {
@@ -20,6 +22,33 @@ class AuthRepository implements AuthInterface
 
     }
 
+    public function user_register($request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
+        $token = auth('users')->login($user);
+        return response()->json($this->respondWithTokenUsers($token));
+
+    }
+
+    public function user_login($request)
+    {
+
+        $credentials = request(['email', 'password']);
+        if (! $token = auth('users')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->respondWithTokenUsers($token);
+    }
+
+    public function user_logout()
+    {
+
+    }
 
 
     /**
@@ -37,5 +66,15 @@ class AuthRepository implements AuthInterface
             'user' => auth('admin')->user(),
         ]);
     }
+    protected function respondWithTokenUsers($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'user' => auth('users')->user(),
+        ]);
+    }
+
+
 
 }
