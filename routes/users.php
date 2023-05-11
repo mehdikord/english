@@ -10,3 +10,14 @@ Route::prefix('auth')->group(function (){
 });
 
 
+//enable auth middleware for authenticate
+Route::middleware('auth:users')->group(function (){
+
+    Route::prefix('profile')->as('profile')->group(function (){
+
+    });
+
+
+});
+
+
