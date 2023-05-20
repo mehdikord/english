@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Requests\Episodes;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EpisodesRequest extends FormRequest
+class AuthUserSmsLoginRequest extends FormRequest
 {
 
     /**
@@ -23,10 +23,7 @@ class EpisodesRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|max:225',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image',
-            'file' => 'nullable|mimes:zip,rar,apk',
+            'phone'=>'required|numeric',
         ];
     }
     public function failedValidation(Validator $validator)

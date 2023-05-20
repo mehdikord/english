@@ -1,11 +1,12 @@
 <?php
-namespace App\Http\Requests\Episodes;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
-class EpisodesRequest extends FormRequest
+class ProfileUserUpdateRequest extends FormRequest
 {
 
     /**
@@ -19,14 +20,18 @@ class EpisodesRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    public $user;
     public function rules()
     {
+        $this->user = auth('users')->user();
 
         return [
             'name' => 'required|max:225',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image',
-            'file' => 'nullable|mimes:zip,rar,apk',
+            'email' => [
+                'nullable',
+                'email',
+                Rule::unique('users')->ignore($this->user->id),
+            ],
         ];
     }
     public function failedValidation(Validator $validator)

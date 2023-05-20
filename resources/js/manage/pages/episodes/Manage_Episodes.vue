@@ -35,12 +35,27 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
                             </template>
                         </q-input>
+                        <q-file outlined bottom-slots v-model="add.file" label="Episode File" counter class="q-my-xs q-mb-md">
+                            <template v-slot:prepend>
+                                <q-icon name="mdi-file" @click.stop.prevent />
+                            </template>
+                            <template v-slot:append>
+
+                                <q-icon name="mdi-close" @click.stop.prevent="add.file = null" class="cursor-pointer" />
+                            </template>
+                            <template v-slot:hint >
+                                The file must be of Zip ( zip-rar-apk ) type
+                            </template>
+                            <template v-slot:error>
+                                <Error_Validation :errors="this.MixinValidation(errors,'file')"></Error_Validation>
+                            </template>
+                        </q-file>
+
                         <q-file outlined bottom-slots v-model="add.image" label="Episode image" counter class="q-my-xs q-mb-md">
                             <template v-slot:prepend>
                                 <q-icon name="mdi-image" @click.stop.prevent />
                             </template>
                             <template v-slot:append>
-
                                 <q-icon name="mdi-close" @click.stop.prevent="add.image = null" class="cursor-pointer" />
                             </template>
                             <template v-slot:hint >
@@ -87,9 +102,9 @@
                 <template v-slot:body-cell-id="props">
 
                     <q-td :props="props">
-                        <storage>
+                        <strong>
                             {{props.row.id}}
-                        </storage>
+                        </strong>
                        <q-avatar class="q-ml-md" square size="65px">
                            <img v-if="props.row.image_url" :src="props.row.image_url">
                            <img v-else src="/assets/images/default/episode.png">
@@ -110,9 +125,19 @@
                     </q-td>
                 </template>
 
+                <template v-slot:body-cell-file="props">
+                    <q-td :props="props">
+                        <q-btn v-if="props.row.file" push color="teal" size="small" icon="mdi-download"  >
+                            Download file
+                        </q-btn>
+                        <q-btn v-else push color="dark" size="small" icon="mdi-cancel" disable >
+                            No file
+                        </q-btn>
+                    </q-td>
+                </template>
                 <template v-slot:body-cell-tools="props">
                     <q-td :props="props">
-                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[]" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
+                        <q-btn @click="dialog_edit[props.row.id] = true;errors=[];edit_file=null" glossy color="primary" size="sm" icon="mdi-pen" class="q-mx-xs">
                             <q-tooltip class="bg-grey-9">Edit this item</q-tooltip>
                         </q-btn>
                         <q-btn @click="DeleteItem(props.row.id)" glossy color="red-9" size="sm" icon="mdi-delete" class="q-mx-xs">
@@ -150,6 +175,24 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'sale')"></Error_Validation>
                                     </template>
                                 </q-input>
+                                <q-banner  rounded class="bg-orange text-dark">
+                                    <q-icon name="mdi-alert" size="large"></q-icon>
+                                    Only when editing the current file. Select the new file
+                                </q-banner>
+                                <q-file outlined bottom-slots v-model="edit_file" label="Episode File" counter class="q-my-xs q-mb-md">
+                                    <template v-slot:prepend>
+                                        <q-icon name="mdi-file" @click.stop.prevent />
+                                    </template>
+                                    <template v-slot:append>
+                                        <q-icon name="mdi-close" @click.stop.prevent="edit_file = null" class="cursor-pointer" />
+                                    </template>
+                                    <template v-slot:hint >
+                                        The file must be of Zip ( zip-rar-apk ) type
+                                    </template>
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'file')"></Error_Validation>
+                                    </template>
+                                </q-file>
                                 <div class="q-my-xs q-gutter-sm">
                                     <q-editor
                                         v-model="props.row.description"
@@ -193,6 +236,7 @@ export default {
             errors:[],
             dialog_add:false,
             dialog_edit:[],
+            edit_file:null,
             add:{
                 name:null,
                 subtitle:null,
@@ -200,6 +244,7 @@ export default {
                 sale:null,
                 description:null,
                 image:null,
+                file:null,
             },
             item_columns:[
                 {
@@ -250,7 +295,13 @@ export default {
                     field: row => row.is_active,
                     sortable: true
                 },
+                {
+                    name:'file',
+                    required: true,
+                    label: 'File',
+                    align: 'left',
 
+                },
                 {
                     name:'tools',
                     required: true,
@@ -258,6 +309,7 @@ export default {
                     align: 'left',
 
                 },
+
             ]
         }
     },
@@ -303,6 +355,11 @@ export default {
         },
         EditItem(item){
             this.loading_add=true;
+            if (this.edit_file){
+                item.file = this.edit_file;
+            }else {
+                item.file = null;
+            }
             this.EpisodesEdit(item).then(res => {
                 this.loading_add=false;
                 this.items = this.items.filter(item_get =>{

@@ -14,5 +14,8 @@ interface EpisodesInterface
 
     public function activation($item);
 
+    //Public ( no auth) functions
+    public function public_index();
+
 
 }

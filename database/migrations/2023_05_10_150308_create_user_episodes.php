@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_episodes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('episode_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('episode_id')->references('id')->on('episodes')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

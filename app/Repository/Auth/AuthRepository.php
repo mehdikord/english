@@ -50,6 +50,39 @@ class AuthRepository implements AuthInterface
 
     }
 
+    public function user_sms_login($request)
+    {
+
+        if (helpers_check_auth_sms_time($request->phone)){
+            return response_custom_error("The previously sent message is valid for two minutes!");
+        }
+        $user = User::where('phone',$request->phone)->first();
+        if (empty($user)){
+            $user = User::create([
+                'name' => 'user_'.rand(1000,9999),
+                'phone' => $request->phone
+            ]);
+        }
+        helpers_auth_make($request->phone);
+        return response_success(['phone' => $request->phone],'The authentication SMS was sent successfully');
+    }
+
+    public function user_sms_check($request)
+    {
+
+        if (helpers_check_auth_code($request->phone,$request->code)){
+            if (!helpers_check_auth_sms_time($request->phone)){
+                return response_custom_error("The time to send the message has expired");
+            }
+            $user = User::where('phone',$request->phone)->first();
+            $token =  auth('users')->login($user);
+            helpers_remove_auth_code($request->phone);
+            return $this->respondWithTokenUsers($token);
+        }
+        return response_custom_error("The code is incorrect");
+
+    }
+
 
     /**
      * Get the token array structure.
@@ -66,6 +99,7 @@ class AuthRepository implements AuthInterface
             'user' => auth('admin')->user(),
         ]);
     }
+
     protected function respondWithTokenUsers($token)
     {
         return response()->json([
