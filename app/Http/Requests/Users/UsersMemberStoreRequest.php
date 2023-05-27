@@ -24,9 +24,9 @@ class UsersMemberStoreRequest extends FormRequest
 
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'nullable|numeric|unique:users',
-            'password' => 'required|confirmed'
+            'email' => 'nullable|email|unique:users',
+            'phone' => 'required|numeric|unique:users',
+//            'password' => 'required|confirmed'
         ];
     }
     public function failedValidation(Validator $validator)

@@ -125,9 +125,24 @@
                     </q-td>
                 </template>
 
+                <template v-slot:body-cell-price="props">
+                    <q-td :props="props">
+                        <strong class="font-14 text-green-7">
+                            {{this.$filters.numbers(props.row.price)}}
+                        </strong>
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-sale="props">
+                    <q-td :props="props">
+                        <strong v-if="props.row.sale" class="font-14 text">
+                            {{this.$filters.numbers(props.row.sale)}}
+                        </strong>
+                    </q-td>
+                </template>
+
                 <template v-slot:body-cell-file="props">
                     <q-td :props="props">
-                        <q-btn v-if="props.row.file" push color="teal" size="small" icon="mdi-download"  >
+                        <q-btn @click="DownloadFile('episodes/download/'+props.row.id,props.row.file,props.row.name)" v-if="props.row.file" push color="teal" size="small" icon="mdi-download"  >
                             Download file
                         </q-btn>
                         <q-btn v-else push color="dark" size="small" icon="mdi-cancel" disable >
@@ -416,6 +431,25 @@ export default {
                 return this.NotifyServerError();
             })
         },
+
+        DownloadFile(link,file=null,name=null) {
+
+            var ex=this.MixinFileExtension(file);
+            axios({
+                url: link,
+                method: 'GET',
+                responseType: 'blob',
+            }).then((response) => {
+                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                var fileLink = document.createElement('a');
+
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', name+"."+ex);
+                document.body.appendChild(fileLink);
+
+                fileLink.click();
+            });
+        }
 
     }
 }

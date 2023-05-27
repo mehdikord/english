@@ -60,9 +60,28 @@ Route::middleware('auth:admin')->group(function (){
         Route::get('activation/{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'activation'])->name('activation');
         Route::post('{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'update'])->name('update');
         Route::delete('{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'delete'])->name('delete');
+        Route::get('download/{episode}',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'download'])->name('download');
 
     });
 
+    //Invoice
+    Route::group(['prefix' => 'invoices','as' => 'invoices.'],function (){
+
+        Route::get('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'store'])->name('store');
+
+
+    });
+
+    //Configs
+    Route::group(['prefix' => 'configs','as' => 'configs.'],function (){
+
+        Route::get('',[\App\Http\Controllers\Manage\Configs\ConfigsController::class,'index'])->name('index');
+        Route::post('{config}',[\App\Http\Controllers\Manage\Configs\ConfigsController::class,'update'])->name('update');
+        Route::get('set/default',[\App\Http\Controllers\Manage\Configs\ConfigsController::class,'default'])->name('default');
+
+
+    });
 
 
 

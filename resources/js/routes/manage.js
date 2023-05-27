@@ -6,6 +6,8 @@ import Manage_Users_Managers from "@/manage/pages/users/Manage_Users_Managers.vu
 import Manage_Users_Members from "../manage/pages/users/Manage_Users_Members.vue";
 import Manage_Faqs from "@/manage/pages/faqs/Manage_Faqs.vue";
 import Manage_Episodes from "../manage/pages/episodes/Manage_Episodes.vue";
+import Manage_Invoices from "../manage/pages/invoices/Manage_Invoices.vue";
+import Manage_Configs from "../manage/pages/configs/Manage_Configs.vue";
 
 const routes = [
 
@@ -44,6 +46,18 @@ const routes = [
         name : "episodes",
         component : Manage_Episodes,
         meta : { title : "Episodes"}
+    },
+    {
+        path : "/management/invoices",
+        name : "invoices",
+        component : Manage_Invoices,
+        meta : { title : "Invoices"}
+    },
+    {
+        path : "/management/configs",
+        name : "configs",
+        component : Manage_Configs,
+        meta : { title : "Configs"}
     },
 
 ]

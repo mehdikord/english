@@ -17,5 +17,13 @@ interface EpisodesInterface
     //Public ( no auth) functions
     public function public_index();
 
+    public function download($item);
+
+    public function user_index();
+
+    public function user_active();
+
+    public function user_buy($item);
+
 
 }

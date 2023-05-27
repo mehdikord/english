@@ -23,6 +23,25 @@ Route::middleware('auth:users')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'me']);
         Route::post('',[\App\Http\Controllers\User\Profile\ProfileController::class,'update']);
     });
+    Route::prefix('life')->as('life')->group(function (){
+        Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'index']);
+
+    });
+    Route::prefix('episodes')->group(function (){
+        Route::get('',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'index']);
+        Route::get('active',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'active']);
+        Route::post('buy/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'buy']);
+        Route::get('download/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'download']);
+
+    });
+
+    Route::prefix('payments')->group(function (){
+
+        Route::get('zarinpal_callback',[\App\Http\Controllers\User\Invoice\InvoiceController::class,'callback_zarinpal'])->withoutMiddleware('auth:users');
+
+    });
+
+
 
 
 });

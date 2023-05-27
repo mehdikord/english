@@ -40,4 +40,9 @@ class EpisodesController extends Controller
     {
         return $this->repository->activation($episode);
     }
+
+    public function download(Episode $episode)
+    {
+        return $this->repository->download($episode);
+    }
 }

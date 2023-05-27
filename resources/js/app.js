@@ -114,10 +114,14 @@ App.mixin({
         MixinValidation(errors,field){
             return Helper.HelperValidationErrors(errors,field);
         },
+        MixinFileExtension(file){
+            var ex = file.split('.');
+            return ex[ex.length - 1]
+        },
         MixinValidationCheck(errors,field){
             return Helper.HelperValidationCheck(errors,field);
-
         },
+
     },
     computed : {
         ...mapGetters({
@@ -129,6 +133,13 @@ App.mixin({
 })
 
 // ++++++++++++++++++++
+//Filters
+App.config.globalProperties.$filters = {
+
+    numbers(number){
+        return new Intl.NumberFormat().format(number);
+    }
+}
 
 
 

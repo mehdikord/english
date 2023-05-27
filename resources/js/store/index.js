@@ -3,6 +3,8 @@ import managers from "./modules/users/managers";
 import members from "./modules/users/members";
 import faqs from "./modules/faqs/faqs"
 import episodes from "./modules/episodes/episodes"
+import invoices from "./modules/invoices/invoices"
+import configs from "./modules/configs/configs"
 import helpers from "./modules/helpers/helpers"
 const store = createStore({
     state(){
@@ -17,7 +19,9 @@ const store = createStore({
         members,
         faqs,
         episodes,
-        helpers
+        invoices,
+        helpers,
+        configs
 
 
     },

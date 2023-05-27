@@ -48,3 +48,9 @@ function helpers_random_code($unique = 1,$count = 10): string
     }
     return $unique.rand($start,$end);
 }
+
+//get system config
+function helper_config($key){
+    $conf = \App\Models\Config::where('conf_key',$key)->first();
+    return $conf->conf_val ?? '';
+}

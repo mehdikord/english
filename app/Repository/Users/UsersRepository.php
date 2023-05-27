@@ -59,7 +59,8 @@ class UsersRepository implements UsersInterface
             'email' => $request->email,
             'phone' => $request->phone,
             'is_active'=>1,
-            'password' => Hash::make($request->password),
+            'life' => $request->life,
+
         ]);
         return response_success($item);
     }
@@ -70,6 +71,8 @@ class UsersRepository implements UsersInterface
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'life' => $request->life,
+
         ]);
         return response_success($item);
     }

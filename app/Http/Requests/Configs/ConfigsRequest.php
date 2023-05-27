@@ -1,12 +1,11 @@
 <?php
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Configs;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class UsersMemberUpdateRequest extends FormRequest
+class ConfigsRequest extends FormRequest
 {
 
     /**
@@ -24,16 +23,7 @@ class UsersMemberUpdateRequest extends FormRequest
     {
 
         return [
-            'name' => 'required',
-            'phone' => [
-                'required',
-                Rule::unique('users')->ignore($this->user->id),
-            ],
-            'email' => [
-                'nullable',
-                'email',
-                Rule::unique('users')->ignore($this->user->id),
-            ],
+            'conf_val' => 'required|max:225',
         ];
     }
     public function failedValidation(Validator $validator)

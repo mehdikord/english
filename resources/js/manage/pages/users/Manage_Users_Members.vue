@@ -5,7 +5,6 @@
             <q-btn @click="dialog_add=true" color="deep-orange-7" icon="mdi-plus" push class="float-right" label="Add Item"></q-btn>
             <q-dialog
                 v-model="dialog_add"
-
                 transition-show="scale"
                 transition-hide="scale"
                 position="top"
@@ -30,14 +29,9 @@
                                 <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                             </template>
                         </q-input>
-                        <q-input v-model="add.password" lazy-rules type="password" outlined label="Password" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password')">
+                        <q-input v-model="add.life" lazy-rules type="number" outlined label="Life count" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'life')">
                             <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password')"></Error_Validation>
-                            </template>
-                        </q-input>
-                        <q-input v-model="add.password_confirmation" lazy-rules type="password" outlined label="Password confirmation" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'password_confirmation')">
-                            <template v-slot:error>
-                                <Error_Validation :errors="this.MixinValidation(errors,'password_confirmation')"></Error_Validation>
+                                <Error_Validation :errors="this.MixinValidation(errors,'life')"></Error_Validation>
                             </template>
                         </q-input>
 
@@ -63,6 +57,12 @@
                 table-header-class="text-indigo"
                 :loading="loading_get"
             >
+                <template v-slot:header-cell-life="props">
+                    <q-th :props="props">
+                        <q-icon name="mdi-heart" size="x-large" class="text-red"/>
+                        {{ props.col.label }}
+                    </q-th>
+                </template>
                 <template v-slot:loading>
                     <Global_Loading></Global_Loading>
                 </template>
@@ -83,6 +83,13 @@
                             color="green-7"
                             @click="ChangeStatus(props.row.id)"
                         />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-life="props">
+                    <q-td :props="props">
+                        <q-badge color="red" class="font-13">
+                            {{props.row.life}}
+                        </q-badge>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-tools="props">
@@ -120,7 +127,11 @@
                                         <Error_Validation :errors="this.MixinValidation(errors,'phone')"></Error_Validation>
                                     </template>
                                 </q-input>
-
+                                <q-input v-model="props.row.life" lazy-rules type="number" outlined label="Life count" color="primary" class="q-my-xs" :error="this.MixinValidationCheck(errors,'life')">
+                                    <template v-slot:error>
+                                        <Error_Validation :errors="this.MixinValidation(errors,'life')"></Error_Validation>
+                                    </template>
+                                </q-input>
 
                             </q-card-section>
 
@@ -164,8 +175,8 @@ export default {
                 name:null,
                 email:null,
                 phone:null,
-                password:null,
-                password_confirmation:null,
+                life:1,
+
             },
             item_columns:[
                 {
@@ -206,6 +217,14 @@ export default {
                     label: 'Account Status',
                     align: 'left',
                     field: row => row.is_active,
+                    sortable: true
+                },
+                {
+                    name:'life',
+                    required: true,
+                    label: 'Life count',
+                    align: 'left',
+                    field: row => row.life,
                     sortable: true
                 },
                 {
