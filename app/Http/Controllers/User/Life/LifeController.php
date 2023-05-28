@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Life;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\BuyLifeRequest;
 use App\Interfaces\Life\LifeInterface;
 use Illuminate\Http\Request;
 
@@ -18,5 +19,16 @@ class LifeController extends Controller
     public function index()
     {
         return $this->repository->index();
+    }
+
+    public function buy(BuyLifeRequest $request)
+    {
+        return $this->repository->buy($request);
+    }
+
+    public function delete()
+    {
+
+        return $this->repository->delete();
     }
 }

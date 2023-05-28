@@ -25,5 +25,8 @@ interface EpisodesInterface
 
     public function user_buy($item);
 
+    public function user_set_active($item);
+    public function user_set_done($item);
+
 
 }

@@ -25,6 +25,8 @@ Route::middleware('auth:users')->group(function (){
     });
     Route::prefix('life')->as('life')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'index']);
+        Route::delete('',[\App\Http\Controllers\User\Life\LifeController::class,'delete']);
+        Route::post('buy',[\App\Http\Controllers\User\Life\LifeController::class,'buy']);
 
     });
     Route::prefix('episodes')->group(function (){
@@ -32,6 +34,10 @@ Route::middleware('auth:users')->group(function (){
         Route::get('active',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'active']);
         Route::post('buy/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'buy']);
         Route::get('download/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'download']);
+        Route::prefix('set')->group(function (){
+            Route::get('active/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'set_active'])->name('set.active');
+            Route::get('done/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'set_done'])->name('set.done');
+        });
 
     });
 

@@ -32,7 +32,12 @@
 
                 <template v-slot:body-cell-is_pay="props">
                     <q-td :props="props">
-
+                        <q-btn @click="ChangePayment(props.row.id)" push glossy v-if="props.row.is_pay" color="positive" title="invoice is paid success" icon="mdi-check" size="sm">
+                            Paid
+                        </q-btn>
+                        <q-btn @click="ChangePayment(props.row.id)" push glossy v-else color="negative" title="invoice is unpaid" icon="mdi-close" size="sm" >
+                            Unpaid
+                        </q-btn>
                     </q-td>
                 </template>
                 <template v-slot:body-cell-price="props">
@@ -188,6 +193,7 @@ export default {
     methods:{
         ...mapActions([
             "InvoicesIndex",
+            "InvoicesChangePay"
 
         ]),
         GetItems(){
@@ -265,6 +271,40 @@ export default {
                 this.EpisodesDelete(id).then(res => {
                     this.items = this.items.filter(item =>{
                         return item.id !== id;
+                    })
+                    return this.NotifyDelete();
+                }).catch(error => {
+                    return  this.NotifyServerError();
+                })
+
+            }).onCancel(() => {
+                // console.log('>>>> Cancel')
+            }).onDismiss(() => {
+                // console.log('I am triggered on both OK and Cancel')
+            })
+        },
+        ChangePayment (id) {
+            this.$q.dialog({
+                title: 'Confirm',
+                message: 'Are you sure you want to change the payment status of the invoice?',
+
+                ok: {
+                    push: true,
+                    color:'green-9',
+                },
+                cancel: {
+                    push: true,
+                    color: 'negative'
+                },
+                persistent: true
+            }).onOk(() => {
+                this.InvoicesChangePay(id).then(res => {
+                    this.items = this.items.filter(item =>{
+                        if (item.id === id){
+                            item = res.data.result;
+                            item.is_pay = !item.is_pay;
+                        }
+                        return item
                     })
                     return this.NotifyDelete();
                 }).catch(error => {

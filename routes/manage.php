@@ -69,6 +69,7 @@ Route::middleware('auth:admin')->group(function (){
 
         Route::get('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'index'])->name('index');
         Route::post('',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'store'])->name('store');
+        Route::get('change/payment/{invoice}',[\App\Http\Controllers\Manage\Invoices\InvoiceController::class,'change_payment'])->name('change_payment');
 
 
     });

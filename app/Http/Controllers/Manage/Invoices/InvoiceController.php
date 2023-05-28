@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manage\Invoices;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Invoices\InvoicesInterface;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -18,4 +19,11 @@ class InvoiceController extends Controller
     {
         return $this->repository->index();
     }
+
+    public function change_payment(Invoice $invoice)
+    {
+        return $this->repository->change_payment($invoice);
+
+    }
+
 }

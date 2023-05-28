@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Episodes;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Episodes\EpisodesInterface;
 use App\Models\Episode;
+use App\Models\User_Episode;
 use Illuminate\Http\Request;
 
 class EpisodeController extends Controller
@@ -27,5 +28,17 @@ class EpisodeController extends Controller
     public function buy(Episode $episode)
     {
         return $this->repository->user_buy($episode);
+    }
+
+    public function set_active(User_Episode $episode)
+    {
+        return $this->repository->user_set_active($episode);
+
+    }
+
+    public function set_done(User_Episode $episode)
+    {
+        return $this->repository->user_set_done($episode);
+
     }
 }

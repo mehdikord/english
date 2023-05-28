@@ -1,9 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace bootstrap\database\seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

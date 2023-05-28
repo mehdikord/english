@@ -86,7 +86,6 @@ class EpisodesRepository implements EpisodesInterface
     {
         $item->delete();
         return response_success(true,'item deleted success');
-
     }
 
     public function activation($item)
@@ -103,7 +102,6 @@ class EpisodesRepository implements EpisodesInterface
         }
     }
 
-
     public function user_index()
     {
         $data = auth('users')->user()->episodes();
@@ -113,7 +111,7 @@ class EpisodesRepository implements EpisodesInterface
 
     public function user_active()
     {
-        $data = auth('users')->user()->episodes()->where('status',User_Episode::ACTIVE_STATUS)->first();
+        $data = auth('users')->user()->episodes()->where('status',User_Episode::ACTIVE_STATUS)->with('episode')->first();
         return response_success($data);
     }
 
@@ -137,7 +135,7 @@ class EpisodesRepository implements EpisodesInterface
         }else{
             $amount = $item->price;
         }
-        $callback = url('api/users/callbacks/plans/payments/customer');
+        $callback = url('api/users/payments/zarinpal_callback');
         $invoice->update(['price' => $amount]);
         $pay = $this->zarinpal_service->
         request(
@@ -160,16 +158,33 @@ class EpisodesRepository implements EpisodesInterface
 
 
     }
+
+    public function user_set_active($item)
+    {
+        if ($item->user_id != auth('users')->id()){
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        auth('users')->user()->episodes()->where('status','active')->update(['status' => 'pending']);
+        $item->update(['status' => 'active']);
+        return response_success('','episode activation success');
+
+    }
+
+    public function user_set_done($item)
+    {
+        if ($item->user_id != auth('users')->id()){
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $item->update(['status' => 'done']);
+        return response_success('','episode done success');
+
+    }
+
     public function public_index()
     {
         $data = Episode::whereIs_active(true)->OrderByDesc('id')->get();
         return response_success(EpisodePublicResource::collection($data));
     }
-
-
-
-
-
 
 
 

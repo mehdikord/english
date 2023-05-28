@@ -14,6 +14,16 @@ export default {
                 })
             } )
         },
+        InvoicesChangePay(_,item){
+            return new Promise((resolve,reject) => {
+                axios.get('invoices/change/payment/'+item).then((result) => {
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                })
+            } )
+        },
+
         InvoicesStore(_,item){
             return new Promise((resolve,reject) => {
                 axios.post('faqs',item).then((result) => {
@@ -23,6 +33,7 @@ export default {
                 })
             } )
         },
+
         InvoicesEdit(_,item){
             return new Promise((resolve,reject) => {
                 axios.post('faqs/'+item.id,item).then((result) => {
@@ -32,6 +43,7 @@ export default {
                 })
             } )
         },
+
         InvoicesDelete(_,item){
             return new Promise((resolve,reject) => {
                 axios.delete('faqs/'+item).then((result) => {
