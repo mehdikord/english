@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Episodes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Episodes\EpisodesSetLevelRequest;
 use App\Interfaces\Episodes\EpisodesInterface;
 use App\Models\Episode;
 use App\Models\User_Episode;
@@ -40,5 +41,11 @@ class EpisodeController extends Controller
     {
         return $this->repository->user_set_done($episode);
 
+    }
+
+    public function set_level(EpisodesSetLevelRequest $request,User_Episode $episode)
+    {
+
+        return $this->repository->user_set_level($episode,$request);
     }
 }

@@ -123,7 +123,7 @@ class EpisodesRepository implements EpisodesInterface
         DB::beginTransaction();
         $invoice = Invoice::create([
             'user_id' => auth('users')->id(),
-            'title' => "Buy episode : $item->title",
+            'title' => "Buy episode : $item->name",
             'method' => 'online',
             'episode' =>$item->id,
             'gateway'=>"Zarinpal",
@@ -170,6 +170,16 @@ class EpisodesRepository implements EpisodesInterface
 
     }
 
+    public function user_set_level($item,$request)
+    {
+        if ($item->user_id != auth('users')->id()){
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $item->update(['level' => $request->level]);
+        return response_success('','level updated success');
+
+    }
+
     public function user_set_done($item)
     {
         if ($item->user_id != auth('users')->id()){
@@ -183,6 +193,7 @@ class EpisodesRepository implements EpisodesInterface
     public function public_index()
     {
         $data = Episode::whereIs_active(true)->OrderByDesc('id')->get();
+
         return response_success(EpisodePublicResource::collection($data));
     }
 

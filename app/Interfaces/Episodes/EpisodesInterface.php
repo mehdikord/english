@@ -27,6 +27,7 @@ interface EpisodesInterface
 
     public function user_set_active($item);
     public function user_set_done($item);
+    public function user_set_level($item,$request);
 
 
 }

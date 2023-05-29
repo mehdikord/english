@@ -37,6 +37,7 @@ Route::middleware('auth:users')->group(function (){
         Route::prefix('set')->group(function (){
             Route::get('active/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'set_active'])->name('set.active');
             Route::get('done/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'set_done'])->name('set.done');
+            Route::post('level/{episode}',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'set_level'])->name('set.level');
         });
 
     });
