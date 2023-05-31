@@ -19,6 +19,15 @@ Route::prefix('auth')->group(function (){
 //enable auth middleware for authenticate
 Route::middleware('auth:admin')->group(function (){
 
+    //Dashboard
+    Route::group(['prefix' => 'dashboard','as' => 'dashboard.'],function (){
+        Route::get('counts',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'counts'])->name('counts');
+        Route::get('latest/users',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'latest_users'])->name('latest_users');
+        Route::get('latest/invoices',[\App\Http\Controllers\Manage\Dashboard\DashboardController::class,'latest_invoices'])->name('latest_invoices');
+
+
+    });
+
     //authenticated user
     Route::prefix('me')->group(function (){
         Route::get('',[\App\Http\Controllers\Manage\Profile\ProfileController::class,'me'])->name('me');
