@@ -1,4 +1,7 @@
 <?php
+use Kavenegar\Laravel\Facade as Kavenegar;
+
+
 
 //make auth sms
 function helpers_auth_make($phone): void
@@ -13,6 +16,11 @@ function helpers_auth_make($phone): void
         'code' => $code,
         'updated_at' => \Carbon\Carbon::now(),
     ]);
+//    if (env('APP_DEBUG')){
+        $req = new \GuzzleHttp\Client();
+        $req->get("https://api.kavenegar.com/v1/35573978332F642B394559316A4A59574D71776A5033344D754846616437523950486A6E33326B673367383D/verify/lookup.json?receptor=$phone&token=$code&template=attivaa-auth");
+//    }
+
 }
 
 //check auth sms time
