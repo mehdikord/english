@@ -60,7 +60,8 @@ class AuthRepository implements AuthInterface
         if (empty($user)){
             $user = User::create([
                 'name' => 'user_'.rand(1000,9999),
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'life' => 5,
             ]);
         }
         helpers_auth_make($request->phone);
