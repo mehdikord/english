@@ -34,6 +34,12 @@
             </q-item-section>
             <q-item-section>Episodes</q-item-section>
         </q-item>
+        <q-item clickable v-ripple :to="{name : 'packs'}">
+            <q-item-section avatar>
+                <q-icon color="dark" name="mdi-heart" />
+            </q-item-section>
+            <q-item-section>Life Packs</q-item-section>
+        </q-item>
         <q-item clickable v-ripple :to="{name : 'invoices'}">
             <q-item-section avatar>
                 <q-icon color="dark" name="mdi-piggy-bank-outline" />

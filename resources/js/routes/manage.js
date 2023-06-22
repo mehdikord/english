@@ -8,6 +8,7 @@ import Manage_Faqs from "@/manage/pages/faqs/Manage_Faqs.vue";
 import Manage_Episodes from "../manage/pages/episodes/Manage_Episodes.vue";
 import Manage_Invoices from "../manage/pages/invoices/Manage_Invoices.vue";
 import Manage_Configs from "../manage/pages/configs/Manage_Configs.vue";
+import Manage_Life_Pack from "../manage/pages/packs/Manage_Life_Pack.vue";
 
 const routes = [
 
@@ -58,6 +59,12 @@ const routes = [
         name : "configs",
         component : Manage_Configs,
         meta : { title : "Configs"}
+    },
+    {
+        path : "/management/packs",
+        name : "packs",
+        component : Manage_Life_Pack ,
+        meta : { title : "Life Packs"}
     },
 
 ]
