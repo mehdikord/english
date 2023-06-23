@@ -16,4 +16,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function pack()
+    {
+        return $this->belongsTo(Life_Pack::class,'life_pack_id');
+    }
 }

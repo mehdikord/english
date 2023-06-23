@@ -124,6 +124,8 @@ export default {
                     required: true,
                     label: 'Code',
                     align: 'left',
+                    field: row => row.code,
+
                 },
                 {
                     name:'title',
@@ -306,7 +308,7 @@ export default {
                         }
                         return item
                     })
-                    return this.NotifyDelete();
+                    return this.NotifySuccess("Payment status changed success");
                 }).catch(error => {
                     return  this.NotifyServerError();
                 })
@@ -324,7 +326,6 @@ export default {
                 return this.NotifyServerError();
             })
         },
-
         DownloadFile(link,file=null,name=null) {
 
             var ex=this.MixinFileExtension(file);

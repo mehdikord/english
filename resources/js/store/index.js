@@ -5,6 +5,7 @@ import faqs from "./modules/faqs/faqs"
 import episodes from "./modules/episodes/episodes"
 import invoices from "./modules/invoices/invoices"
 import configs from "./modules/configs/configs"
+import packs from "./modules/packs/packs"
 import helpers from "./modules/helpers/helpers"
 const store = createStore({
     state(){
@@ -21,7 +22,8 @@ const store = createStore({
         episodes,
         invoices,
         helpers,
-        configs
+        configs,
+        packs
 
 
     },

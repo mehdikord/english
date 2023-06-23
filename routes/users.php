@@ -27,8 +27,14 @@ Route::middleware('auth:users')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'index']);
         Route::delete('',[\App\Http\Controllers\User\Life\LifeController::class,'delete']);
         Route::post('buy',[\App\Http\Controllers\User\Life\LifeController::class,'buy']);
+    });
+    Route::prefix('packs')->group(function (){
+
+        Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'pack_index']);
+        Route::post('buy/{pack}',[\App\Http\Controllers\User\Life\LifeController::class,'pack_buy']);
 
     });
+
     Route::prefix('episodes')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'index']);
         Route::get('active',[\App\Http\Controllers\User\Episodes\EpisodeController::class,'active']);

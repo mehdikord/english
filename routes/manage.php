@@ -62,6 +62,15 @@ Route::middleware('auth:admin')->group(function (){
 
     });
 
+    //Packs
+    Route::group(['prefix' => 'packs','as' => 'packs.'],function (){
+        Route::get('',[\App\Http\Controllers\Manage\Packs\PackController::class,'index'])->name('index');
+        Route::post('',[\App\Http\Controllers\Manage\Packs\PackController::class,'store'])->name('store');
+        Route::post('{pack}',[\App\Http\Controllers\Manage\Packs\PackController::class,'update'])->name('update');
+        Route::delete('{pack}',[\App\Http\Controllers\Manage\Packs\PackController::class,'delete'])->name('delete');
+
+    });
+
     //Episodes
     Route::group(['prefix' => 'episodes','as' => 'episodes.'],function (){
         Route::get('',[\App\Http\Controllers\Manage\Episodes\EpisodesController::class,'index'])->name('index');

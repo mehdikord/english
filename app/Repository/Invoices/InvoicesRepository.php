@@ -80,6 +80,13 @@ class InvoicesRepository implements InvoicesInterface
             if (!empty($invoice->life) && $invoice->life > 0) {
                 $user->update(['life' => $user->life + $invoice->life]);
             }
+            if (!empty($invoice->life_pack_id) && !empty($invoice->pack)){
+                $pack_life = $invoice->pack->life;
+                $user->update(['life' => $user->life + $pack_life]);
+            }
+
+
+
             DB::commit();
             return redirect()->route('reports_payment_success');
         }
