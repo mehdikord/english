@@ -46,6 +46,11 @@ class ConfigsRepository implements ConfigsInterface
                 'conf_key' => 'life_price',
                 'conf_val' => '1500',
                 'description' => 'The price of each user life to buy',
+            ],
+            [
+                'conf_key' => 'version',
+                'conf_val' => '1',
+                'description' => 'Application version number',
             ]
 
         ];

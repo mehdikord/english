@@ -7,3 +7,6 @@ Route::prefix('episodes')->group(function (){
    Route::get('',[\App\Http\Controllers\Public\Episodes\EpisodeController::class,'index']);
 
 });
+Route::prefix('config')->group(function (){
+   Route::get('app/version',[\App\Http\Controllers\Public\ConfigController::class,'version']);
+});
