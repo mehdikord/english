@@ -24,4 +24,9 @@ class ProfileController extends Controller
     {
         return $this->repository->user_update($request);
     }
+
+    public function update_level(Request $request)
+    {
+        return $this->repository->user_update_level($request);
+    }
 }

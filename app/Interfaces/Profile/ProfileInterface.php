@@ -9,6 +9,7 @@ interface ProfileInterface
 
     public function user_me();
     public function user_update($request);
+    public function user_update_level($request);
 
 
 }

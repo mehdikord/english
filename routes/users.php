@@ -22,6 +22,7 @@ Route::middleware('auth:users')->group(function (){
     Route::prefix('profile')->as('profile')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Profile\ProfileController::class,'me']);
         Route::post('',[\App\Http\Controllers\User\Profile\ProfileController::class,'update']);
+        Route::post('level',[\App\Http\Controllers\User\Profile\ProfileController::class,'update_level']);
     });
     Route::prefix('life')->as('life')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'index']);

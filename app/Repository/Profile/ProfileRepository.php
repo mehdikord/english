@@ -26,6 +26,14 @@ class ProfileRepository implements ProfileInterface
         return response_success(auth('users')->user());
     }
 
+    public function user_update_level($request)
+    {
+        auth('users')->user()->update([
+            'level' => $request->level,
+        ]);
+        return response_success(auth('users')->user());
+    }
+
 
 
 }
