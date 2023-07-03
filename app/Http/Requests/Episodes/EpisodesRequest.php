@@ -26,7 +26,7 @@ class EpisodesRequest extends FormRequest
             'name' => 'required|max:225',
             'price' => 'required|numeric',
             'image' => 'nullable|image',
-            'file' => 'nullable|mimes:zip,rar,apk',
+            'file' => 'nullable',
         ];
     }
     public function failedValidation(Validator $validator)
