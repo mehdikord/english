@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('episodes')->group(function (){
 
    Route::get('',[\App\Http\Controllers\Public\Episodes\EpisodeController::class,'index']);
+   Route::get('download/{episode}',[\App\Http\Controllers\Public\Episodes\EpisodeController::class,'download']);
 
 });
 Route::prefix('config')->group(function (){
