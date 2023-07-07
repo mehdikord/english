@@ -156,6 +156,13 @@ class LifeRepository implements LifeInterface
 
     }
 
+    public function change($request)
+    {
+        auth('users')->user()->update(['life' => $request->total]);
+        return response_success([],'Life changed success');
+
+    }
+
 
 
 }

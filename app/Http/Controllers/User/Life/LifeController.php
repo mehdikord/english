@@ -43,4 +43,8 @@ class LifeController extends Controller
         return $this->repository->pack_user_by($pack);
     }
 
+    public function change(BuyLifeRequest $request)
+    {
+        return $this->repository->change($request);
+    }
 }

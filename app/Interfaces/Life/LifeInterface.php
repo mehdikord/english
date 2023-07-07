@@ -18,4 +18,6 @@ interface LifeInterface
     public function pack_user_index();
     public function pack_user_by($item);
 
+    public function change($request);
+
 }

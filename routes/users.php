@@ -28,6 +28,7 @@ Route::middleware('auth:users')->group(function (){
         Route::get('',[\App\Http\Controllers\User\Life\LifeController::class,'index']);
         Route::delete('',[\App\Http\Controllers\User\Life\LifeController::class,'delete']);
         Route::post('buy',[\App\Http\Controllers\User\Life\LifeController::class,'buy']);
+        Route::post('change',[\App\Http\Controllers\User\Life\LifeController::class,'change']);
     });
     Route::prefix('packs')->group(function (){
 
