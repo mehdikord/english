@@ -61,7 +61,7 @@ class AuthRepository implements AuthInterface
             $user = User::create([
                 'name' => 'user_'.rand(1000,9999),
                 'phone' => $request->phone,
-                'life' => 5,
+                'life' => 10,
             ]);
         }
         helpers_auth_make($request->phone);
